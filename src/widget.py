@@ -15,8 +15,15 @@ def mask_account_card(data: str) -> str:
         return f"{name} {get_mask_card_number(number)}"
 
 
-print(mask_account_card("Visa Platinum 8990922113665229"))
+#print(mask_account_card("Visa Platinum 8990922113665229"))
 
-print(mask_account_card("Счет 35383033474447895560"))
+#print(mask_account_card("Счет 35383033474447895560"))
 
 
+def get_date(data: str) -> str:
+    """принимает на вход строку с датой и возвращает в формате "ДД.ММ.ГГГГ"""
+    date_part = data.split("T")[0]
+    year, month, day = date_part.split("-")
+    return f"{day}.{month}.{year}"
+
+#print(get_date("2024-03-11T02:26:18.671407"))
