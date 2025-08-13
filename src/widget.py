@@ -3,8 +3,7 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(data: str) -> str:
     """Принимает на вход тип и номер карты или счета и возвращает маску"""
-    mask_card = ""
-    if data.startswith('Счет'):
+    if data.startswith("Счет"):
         # для счетов: берем все после слова счет.
         number = data.split()[-1]
         return f"Счет {get_mask_account(number)}"
@@ -15,9 +14,9 @@ def mask_account_card(data: str) -> str:
         return f"{name} {get_mask_card_number(number)}"
 
 
-#print(mask_account_card("Visa Platinum 8990922113665229"))
+# print(mask_account_card("Visa Platinum 8990922113665229"))
 
-#print(mask_account_card("Счет 35383033474447895560"))
+# print(mask_account_card("Счет 35383033474447895560"))
 
 
 def get_date(data: str) -> str:
@@ -26,4 +25,5 @@ def get_date(data: str) -> str:
     year, month, day = date_part.split("-")
     return f"{day}.{month}.{year}"
 
-#print(get_date("2024-03-11T02:26:18.671407"))
+
+# print(get_date("2024-03-11T02:26:18.671407"))
