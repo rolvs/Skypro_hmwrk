@@ -10,7 +10,7 @@ def get_mask_card_number(num: str) -> str:
         # первые 6 + ** + последние 4
         visible = digits[:6] + "******" + digits[-4:]
         # разобьём на блоки по 4 цифры
-        blocks = [visible[i:i+4] for i in range(0, len(visible), 4)]
+        blocks = [visible[i : i + 4] for i in range(0, len(visible), 4)]
         # добавим название карты (например "Visa Platinum")
         prefix = " ".join(num.split()[:-1])
         return f"{prefix} {' '.join(blocks)}"
