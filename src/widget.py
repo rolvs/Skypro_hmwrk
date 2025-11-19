@@ -11,7 +11,7 @@ def mask_account_card(data: str) -> str:
         # для карт: берем все, что после типа карты и названия
         *name_parts, number = data.split()
         name = " ".join(name_parts)
-        return f"{name} {get_mask_card_number(number)}"
+        return get_mask_card_number(f"{name} {number}")
 
 
 # print(mask_account_card("Visa Platinum 8990922113665229"))

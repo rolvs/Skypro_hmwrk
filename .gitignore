@@ -1,3 +1,6 @@
  __pycache__
  .idea/
  *.pyc
+.pytest_cache/
+htmlcov/
+.venv/
