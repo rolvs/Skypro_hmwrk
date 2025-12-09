@@ -1,45 +1,77 @@
-# Skypro Homework — Module 2, Lesson 10.2
+# Skypro Homework — Module 2, Lesson 11.1  
+## Генераторы и обработка транзакций
 
-## 📘 Описание проекта
-Домашняя работа по модулю 2 курса Skypro: тестирование функций проекта с помощью библиотеки **pytest**.
+В проект добавлен модуль **`generators.py`**, содержащий три функции:
 
-## 🗂 Структура проекта
-src/
-masks.py # функции маскировки номеров
-widget.py # функции форматирования вывода
-tests/
-conftest.py # фикстуры
-test_masks.py # тесты для masks.py
-test_widget.py # тесты для widget.py
-report/ # HTML-отчёт покрытия тестами
+---
 
-## 🧪 Тестирование
-Для запуска тестов:
+### 1.`filter_by_currency(transactions, currency_code)`
+Возвращает только те транзакции, у которых код валюты совпадает с `currency_code`.
 
-pytest
+**Пример использования:**
 
-Проверка покрытия и создание HTML-отчёта:
-pytest --cov=src --cov-report=html:tests/report
+```python
+from src.generators import filter_by_currency
 
-Открыть отчёт можно по пути:
-tests/report/index.html
+usd_transactions = list(filter_by_currency(transactions, "USD")) 
+```
 
-# Bank Widget Project
+### 2.transaction_descriptions(transactions)
 
-Проект для курса Python-разработки. Разрабатывается бэкенд для виджета в личном кабинете клиента, показывающего последние успешные банковские операции.
+Генератор, возвращающий описания (description) транзакций, если они не пустые.
 
+Пример использования:
+```python
+from src.generators import transaction_descriptions
 
-## Основные функции
+for desc in transaction_descriptions(transactions):
+    print(desc)
+```
+### 3. card_number_generator(start, end)
 
-- processing.py
-  - filter_by_state(items, state="EXECUTED") — фильтрует операции по статусу.
-  - sort_by_date(items, descending=True) — сортирует операции по дате.
+Генерирует последовательность номеров карт в формате:
 
-- widget.py
-  - mask_account_card(account) — маскирует номер карты или счета, оставляя последние 4 цифры.
-  - get_date(date_str) — преобразует дату из формата ISO в "ДД.ММ.ГГГГ".
+```nginx
+XXXX XXXX XXXX XXXX
+```
 
-## Стиль и проверка кода
+Пример использования:
 
-- PEP 8, flake8, isort, black, mypy.
-- Git + GitFlow, атомарные коммиты.
+```python
+from src.generators import card_number_generator
+
+for num in card_number_generator(1, 5):
+    print(num)
+```
+
+###📌 Пример входных данных для тестирования
+```python
+transactions = [
+    {
+        "id": 939719570,
+        "operationAmount": {"amount": "9824.07", "currency": {"code": "USD"}},
+        "description": "Перевод организации"
+    },
+    {
+        "id": 873106923,
+        "operationAmount": {"amount": "43318.34", "currency": {"code": "RUB"}},
+        "description": "Перевод со счета на счет"
+    },
+    ...
+]
+
+```
+
+### 🧪 Тестирование
+
+Тесты находятся в папке tests/ и покрывают функции более чем на 80%
+(фактическое покрытие: 100%).
+
+Запуск тестов
+```python
+pytest -q
+```
+
+HTML-отчёт:
+
+file:///C:/Users/bekmu/PycharmProjects/Homework/htmlcov/index.html
