@@ -5,7 +5,7 @@
 
 ---
 
-### 1.`filter_by_currency(transactions, currency_code)`
+### 1. `filter_by_currency(transactions, currency_code)`
 Возвращает только те транзакции, у которых код валюты совпадает с `currency_code`.
 
 **Пример использования:**
@@ -16,7 +16,7 @@ from src.generators import filter_by_currency
 usd_transactions = list(filter_by_currency(transactions, "USD")) 
 ```
 
-### 2.transaction_descriptions(transactions)
+### 2. transaction_descriptions(transactions)
 
 Генератор, возвращающий описания (description) транзакций, если они не пустые.
 
@@ -31,7 +31,7 @@ for desc in transaction_descriptions(transactions):
 
 Генерирует последовательность номеров карт в формате:
 
-```nginx
+```
 XXXX XXXX XXXX XXXX
 ```
 
