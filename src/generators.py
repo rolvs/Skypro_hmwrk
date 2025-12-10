@@ -1,10 +1,10 @@
-from typing import Iterable, Iterator, Dict, Any
+from typing import Any, Dict, Iterator, List
 
 Transaction = Dict[str, Any]
 
 
 def filter_by_currency(
-    transactions: Iterable[Transaction],
+    transactions: List[Transaction],
     currency_code: str,
 ) -> Iterator[Transaction]:
     """
@@ -15,14 +15,16 @@ def filter_by_currency(
         try:
             code = tx["operationAmount"]["currency"]["code"]
         except (KeyError, TypeError):
-            # если структура кривая или нет поля currency — просто пропускаем
+            # если структура некорректная — пропускаем транзакцию
             continue
 
         if code == currency_code:
             yield tx
 
 
-def transaction_descriptions(transactions):
+def transaction_descriptions(
+    transactions: List[Transaction],
+) -> Iterator[str]:
     """
     Генератор, который по очереди возвращает description каждой транзакции.
     """
@@ -32,18 +34,17 @@ def transaction_descriptions(transactions):
             yield desc
 
 
-def card_number_generator(start: int, end: int):
+def card_number_generator(start: int, end: int) -> Iterator[str]:
     """
     Генератор номеров "карт" в формате XXXX XXXX XXXX XXXX.
-    start и end — целые числа в диапазоне от 1 до 9999_9999_9999_9999.
+
+    start и end — целые числа в диапазоне от 1 до 9_999_999_999_999_999.
     """
-    # Ограничение диапазона
     if start < 1:
         start = 1
-    if end > 9999_9999_9999_9999:
-        end = 9999_9999_9999_9999
+    if end > 9_999_999_999_999_999:
+        end = 9_999_999_999_999_999
 
     for num in range(start, end + 1):
-        s = f"{num:016d}"  # Превращаем в строку из 16 цифр с лидирующими нулями
-        formatted = f"{s[0:4]} {s[4:8]} {s[8:12]} {s[12:16]}"
-        yield formatted
+        s = f"{num:016d}"
+        yield f"{s[0:4]} {s[4:8]} {s[8:12]} {s[12:16]}"
