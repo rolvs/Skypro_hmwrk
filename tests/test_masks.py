@@ -1,6 +1,8 @@
 # tests/test_masks.py
 import pytest
-from src.masks import get_mask_card_number, get_mask_account
+
+from src.masks import get_mask_account, get_mask_card_number
+
 
 @pytest.mark.parametrize(
     "inp, expected",
@@ -14,6 +16,7 @@ from src.masks import get_mask_card_number, get_mask_account
 )
 def test_get_mask_card_number_various(inp, expected):
     assert get_mask_card_number(inp) == expected
+
 
 @pytest.mark.parametrize(
     "number, expected_tail",

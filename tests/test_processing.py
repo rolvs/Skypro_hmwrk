@@ -1,4 +1,5 @@
 import pytest
+
 from processing import filter_by_state, sort_by_date
 
 
@@ -26,8 +27,8 @@ def test_filter_by_state_default_filters_EXECUTED(sample_items):
     [
         ("EXECUTED", [1, 3, 5]),
         ("CANCELED", [2]),
-        ("PENDING",  [4]),
-        ("UNKNOWN",  []),
+        ("PENDING", [4]),
+        ("UNKNOWN", []),
     ],
 )
 def test_filter_by_state_with_explicit_state(sample_items, state_value, expected_ids):
