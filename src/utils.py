@@ -1,4 +1,6 @@
 import json
+from typing import Any
+from external_api import convert_to_rub
 
 
 def load_operations(path: str) -> list[dict]:
@@ -19,3 +21,27 @@ def load_operations(path: str) -> list[dict]:
 
     except (FileNotFoundError, json.JSONDecodeError):
         return []
+
+
+
+
+
+def get_transaction_amount_rub(transaction: dict[str, Any]) -> float:
+    """
+    Takes a transaction dict and returns the transaction amount in RUB as float.
+    If currency is USD or EUR, converts via external API.
+    """
+    operation_amount = transaction.get("operationAmount", {})
+    amount_raw = operation_amount.get("amount", 0)
+    currency_info = operation_amount.get("currency", {})
+    currency_code = currency_info.get("code") or currency_info.get("name")
+
+    try:
+        amount = float(amount_raw)
+    except (TypeError, ValueError):
+        amount = 0.0
+
+    if currency_code in ("USD", "EUR"):
+        return float(convert_to_rub(amount, currency_code))
+
+    return float(amount)
